@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: sans-serif; padding: 10px; width: 220px; }
+    .count { margin-top: 10px; font-weight: bold; color: #333; }
+  </style>
+</head>
+<body>
+  <h4>Meet Focus Monitor</h4>
+  <p>Ekstensi ini memantau apakah kamu keluar dari Google Meet.</p>
+  <p class="count">🔢 Jumlah pop-up: <span id="popup-count">...</span></p>
+
+  <script>
+    chrome.storage.local.get(["popup_count"], (result) => {
+      const count = result.popup_count || 0;
+      document.getElementById("popup-count").textContent = count;
+
+      // Play notification sound when pop-up is triggered
+      const audio = new Audio(chrome.runtime.getURL("555.wav"));
+      audio.play().then(() => {
+        console.log('Audio played successfully');
+      }).catch(e => {
+        console.warn("Failed to play audio:", e);
+      });
+    });
+  </script>
+</body>
+</html>
